@@ -1,4 +1,6 @@
-public class ArrayVector {
+package vectors;
+
+public class ArrayVector implements Vector{
     private double[] elements;
 
     public ArrayVector(int length) {
@@ -7,10 +9,14 @@ public class ArrayVector {
     }
 
     public double getElement(int index) {
+        if (index < 0 || index >= elements.length)
+            throw new VectorIndexOutOfBoundsException();
         return elements[index];
     }
 
     public void setElement(int index, double value) {
+        if (index < 0 || index >= elements.length)
+            throw new VectorIndexOutOfBoundsException();
         elements[index] = value;
     }
 
@@ -36,33 +42,13 @@ public class ArrayVector {
         return max;
     }
 
-    public ArrayVector mult(double n) {
-        ArrayVector vector = new ArrayVector(elements.length);
-        for (int i = 0; i < elements.length; i++) {
-            vector.setElement(i, elements[i] * n);
-
-        }
-        return vector;
-    }
-
-    public ArrayVector sum(ArrayVector vector) {
-        ArrayVector result = new ArrayVector(elements.length);
-        for (int i = 0; i < elements.length; i++) {
-            result.setElement(i, elements[i] + vector.getElement(i));
-        }
-        return result;
-    }
-
-    public double scalarMult(ArrayVector vector) {
-        double result = 0.0;
-        for (int i = 0; i < elements.length; i++) {
-            result += elements[i] * vector.getElement(i);
-        }
-        return result;
-    }
-
     public double getNorm() {
-        return scalarMult(this);
+        try {
+            return Vectors.scalarMult(this, this);
+        } catch (IncompatibleVectorSizesException e) {
+            e.printStackTrace();
+        }
+        return -1.0;
     }
 
     public void sort() {
@@ -77,7 +63,7 @@ public class ArrayVector {
         }
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IncompatibleVectorSizesException {
         double[] xdata = {1.0, 2.0, 3.0, 4.0};
         double[] ydata = {5.0, 2.0, 4.0, 1.0};
 
@@ -92,15 +78,15 @@ public class ArrayVector {
 
         System.out.println("x = " + vectorToString(x));
         System.out.println("y = " + vectorToString(y));
-        System.out.println("x + y = " + vectorToString(x.sum(y)));
+        System.out.println("x + y = " + vectorToString(Vectors.sum(x, y)));
         System.out.println("x.max = " + x.max());
         System.out.println("x.min = " + x.min());
-        System.out.println("10x = " + vectorToString(x.mult(10.0)));
+        System.out.println("10x = " + vectorToString(Vectors.mult(x, 10.0)));
         System.out.println("|x| = " + x.getNorm());
-        System.out.println("<x, y> = " + x.scalarMult(y));
+        System.out.println("<x, y> = " + Vectors.scalarMult(x, y));
     }
 
-    private static String vectorToString(ArrayVector vector) {
+    private static String vectorToString(Vector vector) {
         String result = "";
         for (int i = 0; i < vector.getSize() - 1; i++) {
             result += vector.getElement(i) + ", ";
