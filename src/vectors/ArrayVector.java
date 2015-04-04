@@ -1,6 +1,8 @@
 package vectors;
 
-public class ArrayVector implements Vector{
+import java.io.Serializable;
+
+public class ArrayVector implements Vector, Serializable {
     private double[] elements;
 
     public ArrayVector(int length) {

@@ -1,6 +1,8 @@
 package vectors;
 
-public class LinkedListVector implements Vector {
+import java.io.Serializable;
+
+public class LinkedListVector implements Vector, Serializable {
 
     private LinkedList elements;
 
@@ -49,7 +51,7 @@ public class LinkedListVector implements Vector {
         return elements.remove(index);
     }
 
-    private class LinkedList {
+    private class LinkedList implements Serializable {
         private int size;
         private Node head;
 
@@ -118,7 +120,7 @@ public class LinkedListVector implements Vector {
         }
 
 
-        private class Node {
+        private class Node implements Serializable {
             private double value;
             private Node next;
             private Node previous;
