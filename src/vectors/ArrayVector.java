@@ -46,7 +46,7 @@ public class ArrayVector implements Vector, Serializable {
 
     public double getNorm() {
         try {
-            return Vectors.scalarMult(this, this);
+            return Math.sqrt(Vectors.scalarMult(this, this));
         } catch (IncompatibleVectorSizesException e) {
             e.printStackTrace();
         }
