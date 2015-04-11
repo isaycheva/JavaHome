@@ -1,13 +1,14 @@
 package vectors;
 
 import java.io.Serializable;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 public class ArrayVector implements Vector, Serializable {
     private double[] elements;
 
     public ArrayVector(int length) {
         elements = new double[length];
-
     }
 
     public double getElement(int index) {
@@ -65,6 +66,34 @@ public class ArrayVector implements Vector, Serializable {
         }
     }
 
+    @Override
+    public Iterator iterator() {
+        return new ArrayVectorIterator();
+    }
+
+    private class ArrayVectorIterator implements Iterator {
+        private int index = 0;
+
+        @Override
+        public boolean hasNext() {
+            return index < elements.length;
+        }
+
+        @Override
+        public Object next() {
+            if (index >= elements.length)
+                throw new NoSuchElementException();
+            double value = elements[index];
+            index++;
+            return value;
+        }
+
+        @Override
+        public void remove() {
+
+        }
+    }
+
     public static void main(String[] args) throws IncompatibleVectorSizesException {
         double[] xdata = {1.0, 2.0, 3.0, 4.0};
         double[] ydata = {5.0, 2.0, 4.0, 1.0};
@@ -90,9 +119,16 @@ public class ArrayVector implements Vector, Serializable {
 
     private static String vectorToString(Vector vector) {
         String result = "";
-        for (int i = 0; i < vector.getSize() - 1; i++) {
-            result += vector.getElement(i) + ", ";
+//        for (int i = 0; i < vector.getSize() - 1; i++) {
+//            result += vector.getElement(i) + ", ";
+//        }
+//        return result + vector.getElement(vector.getSize() - 1);
+
+        Iterator iterator = vector.iterator();
+        while (iterator.hasNext()) {
+            Double value = (Double) iterator.next();
+            result += value + " ";
         }
-        return result + vector.getElement(vector.getSize() - 1);
+        return result;
     }
 }

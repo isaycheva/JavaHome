@@ -1,6 +1,8 @@
 package vectors;
 
 import java.io.Serializable;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 public class LinkedListVector implements Vector, Serializable {
 
@@ -8,6 +10,13 @@ public class LinkedListVector implements Vector, Serializable {
 
     public LinkedListVector() {
         elements = new LinkedList();
+    }
+
+    public LinkedListVector(int length) {
+        elements = new LinkedList();
+        for (int i = 0; i < length; i++) {
+            elements.add(0.0);
+        }
     }
 
     @Override
@@ -49,6 +58,11 @@ public class LinkedListVector implements Vector, Serializable {
 
     public double remove(int index) {
         return elements.remove(index);
+    }
+
+    @Override
+    public Iterator iterator() {
+        return new LinkedListVectorIterator();
     }
 
     private class LinkedList implements Serializable {
@@ -161,6 +175,29 @@ public class LinkedListVector implements Vector, Serializable {
         }
     }
 
+    private class LinkedListVectorIterator implements Iterator {
+        private int index = 0;
+
+        @Override
+        public boolean hasNext() {
+            return index < elements.size();
+        }
+
+        @Override
+        public Object next() {
+            if (index >= elements.size())
+                throw new NoSuchElementException();
+            double value = elements.get(index);
+            index++;
+            return value;
+        }
+
+        @Override
+        public void remove() {
+
+        }
+    }
+
     public static void main(String[] args) throws IncompatibleVectorSizesException {
         double[] xdata = {1.0, 2.0, 3.0, 4.0};
         double[] ydata = {5.0, 2.0, 4.0, 1.0};
@@ -184,9 +221,15 @@ public class LinkedListVector implements Vector, Serializable {
 
     private static String vectorToString(Vector vector) {
         String result = "";
-        for (int i = 0; i < vector.getSize() - 1; i++) {
-            result += vector.getElement(i) + ", ";
+//        for (int i = 0; i < vector.getSize() - 1; i++) {
+//            result += vector.getElement(i) + ", ";
+//        }
+//        return result + vector.getElement(vector.getSize() - 1);
+        Iterator iterator = vector.iterator();
+        while (iterator.hasNext()) {
+            Double value = (Double) iterator.next();
+            result += value + " ";
         }
-        return result + vector.getElement(vector.getSize() - 1);
+        return result;
     }
 }

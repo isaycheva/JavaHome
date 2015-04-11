@@ -1,5 +1,7 @@
 package vectors;
 
+import java.util.Iterator;
+
 public interface Vector {
     double getElement(int index);
 
@@ -8,4 +10,6 @@ public interface Vector {
     int getSize();
 
     double getNorm();
+
+    Iterator iterator();
 }

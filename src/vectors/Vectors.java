@@ -4,8 +4,18 @@ import java.io.*;
 
 public class Vectors {
 
-    public static ArrayVector mult(Vector vector, double n) {
-        ArrayVector result = new ArrayVector(vector.getSize());
+    private static VectorFactory factory = new ArrayVectorFactory();
+
+    public static void setFactory(VectorFactory factory) {
+        Vectors.factory = factory;
+    }
+
+    public static Vector createInstance(int size) {
+        return factory.createInstance(size);
+    }
+
+    public static Vector mult(Vector vector, double n) {
+        Vector result = factory.createInstance(vector.getSize());
         for (int i = 0; i < vector.getSize(); i++) {
             result.setElement(i, vector.getElement(i) * n);
         }
@@ -15,7 +25,7 @@ public class Vectors {
     public static Vector sum(Vector vector1, Vector vector2) throws IncompatibleVectorSizesException {
         if (vector1.getSize() != vector2.getSize())
             throw new IncompatibleVectorSizesException();
-        Vector result = new ArrayVector(vector1.getSize());
+        Vector result = factory.createInstance(vector1.getSize());
         for (int i = 0; i < result.getSize(); i++) {
             result.setElement(i, vector1.getElement(i) + vector2.getElement(i));
         }
@@ -44,7 +54,7 @@ public class Vectors {
     public static Vector inputVector(InputStream in) throws IOException {
         DataInputStream inputStream = new DataInputStream(in);
         int length = inputStream.readInt();
-        Vector vector = new ArrayVector(length);
+        Vector vector = factory.createInstance(length);
         for (int i = 0; i < length; i++) {
             vector.setElement(i, inputStream.readDouble());
         }
@@ -66,7 +76,7 @@ public class Vectors {
         StreamTokenizer tokenizer = new StreamTokenizer(in);
         tokenizer.nextToken();
         int length = (int) tokenizer.nval;
-        Vector vector = new ArrayVector(length);
+        Vector vector = factory.createInstance(length);
         for (int i = 0; i < length; i++) {
             tokenizer.nextToken();
             vector.setElement(i, tokenizer.nval);
