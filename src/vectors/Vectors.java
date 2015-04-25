@@ -6,7 +6,7 @@ public class Vectors {
 
     private static VectorFactory factory = new ArrayVectorFactory();
 
-    public static void setFactory(VectorFactory factory) {
+    public static void setVectorFactory(VectorFactory factory) {
         Vectors.factory = factory;
     }
 

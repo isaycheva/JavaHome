@@ -1,5 +1,5 @@
 package vectors;
 
 public interface VectorFactory {
-    Vector createInstance(int i);
+    Vector createInstance(int size);
 }
