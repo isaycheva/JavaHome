@@ -85,6 +85,10 @@ public class Vectors {
         return vector;
     }
 
+    public Vector unmodifiableVector(Vector vector) {
+        return new UnmodifiableVector(vector);
+    }
+
     public static void main(String[] args) throws IOException, ClassNotFoundException {
         Vector vector = new ArrayVector(5);
         vector.setElement(0, 1.2);

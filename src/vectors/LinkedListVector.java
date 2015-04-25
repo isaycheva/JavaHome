@@ -48,6 +48,55 @@ public class LinkedListVector implements Vector {
         return -1.0;
     }
 
+    @Override
+    public String toString() {
+        StringBuffer result = new StringBuffer();
+        for (int i = 0; i < elements.size() - 1; i++) {
+            result.append(elements.get(i)).append(", ");
+        }
+        return result.append(elements.get(elements.size() - 1)).toString();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null)
+            return false;
+        if (obj == this)
+            return true;
+        if (!(obj instanceof LinkedListVector))
+            return false;
+        LinkedListVector vector = (LinkedListVector) obj;
+        if (elements.size() != vector.getSize())
+            return false;
+        for (int i = 0; i < elements.size(); i++) {
+            if (elements.get(i) != vector.getElement(i))
+                return false;
+        }
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash ^= elements.size();
+        for (int i = 0; i < elements.size(); i++) {
+            long bits = Double.doubleToLongBits(elements.get(i));
+            hash ^= (int)(bits ^ (bits >>> 32));
+        }
+        return hash;
+    }
+
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        Object clone = super.clone();
+        LinkedListVector result = (LinkedListVector) clone;
+        result.elements = new LinkedList();
+        for (int i = 0; i < elements.size(); i++) {
+            result.elements.add(elements.get(i));
+        }
+        return result;
+    }
+
     public void add(double value) {
         elements.add(value);
     }

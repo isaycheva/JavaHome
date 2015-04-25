@@ -66,6 +66,52 @@ public class ArrayVector implements Vector {
     }
 
     @Override
+    public String toString() {
+        StringBuffer result = new StringBuffer();
+        for (int i = 0; i < elements.length - 1; i++) {
+            result.append(elements[i]).append(", ");
+        }
+        return result.append(elements[elements.length - 1]).toString();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null)
+            return false;
+        if (obj == this)
+            return true;
+        if (!(obj instanceof ArrayVector))
+            return false;
+        ArrayVector vector = (ArrayVector) obj;
+        if (elements.length != vector.getSize())
+            return false;
+        for (int i = 0; i < elements.length; i++) {
+            if (elements[i] != vector.getElement(i))
+                return false;
+        }
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash ^= elements.length;
+        for (Double value : elements) {
+            long bits = Double.doubleToLongBits(value);
+            hash ^= (int) (bits ^ (bits >>> 32));
+        }
+        return hash;
+    }
+
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        Object clone = super.clone();
+        ArrayVector result = (ArrayVector) clone;
+        result.elements = elements.clone();
+        return result;
+    }
+
+    @Override
     public Iterator iterator() {
         return new ArrayVectorIterator();
     }
@@ -104,8 +150,8 @@ public class ArrayVector implements Vector {
             y.setElement(i, ydata[i]);
         }
 
-        System.out.println("x = " + vectorToString(x));
-        System.out.println("y = " + vectorToString(y));
+        System.out.println("x = " + x.toString());
+        System.out.println("y = " + y.toString());
         System.out.println("x + y = " + vectorToString(Vectors.sum(x, y)));
         System.out.println("x.max = " + x.max());
         System.out.println("x.min = " + x.min());
@@ -116,10 +162,6 @@ public class ArrayVector implements Vector {
 
     private static String vectorToString(Vector vector) {
         String result = "";
-//        for (int i = 0; i < vector.getSize() - 1; i++) {
-//            result += vector.getElement(i) + ", ";
-//        }
-//        return result + vector.getElement(vector.getSize() - 1);
 
         Iterator iterator = vector.iterator();
         while (iterator.hasNext()) {
