@@ -1,8 +1,9 @@
 package vectors;
 
+import java.io.Serializable;
 import java.util.Iterator;
 
-public interface Vector {
+public interface Vector extends Serializable {
     double getElement(int index);
 
     void setElement(int index, double value);

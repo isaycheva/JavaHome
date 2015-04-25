@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-public class LinkedListVector implements Vector, Serializable {
+public class LinkedListVector implements Vector {
 
     private LinkedList elements;
 

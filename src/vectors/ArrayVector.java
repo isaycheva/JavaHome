@@ -1,10 +1,9 @@
 package vectors;
 
-import java.io.Serializable;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-public class ArrayVector implements Vector, Serializable {
+public class ArrayVector implements Vector {
     private double[] elements;
 
     public ArrayVector(int length) {
