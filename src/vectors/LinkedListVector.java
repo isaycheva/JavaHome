@@ -185,8 +185,6 @@ public class LinkedListVector implements Vector {
 
         @Override
         public Object next() {
-            if (index >= elements.size())
-                throw new NoSuchElementException();
             double value = elements.get(index);
             index++;
             return value;

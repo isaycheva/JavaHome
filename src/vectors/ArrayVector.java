@@ -80,8 +80,6 @@ public class ArrayVector implements Vector {
 
         @Override
         public Object next() {
-            if (index >= elements.length)
-                throw new NoSuchElementException();
             double value = elements[index];
             index++;
             return value;
