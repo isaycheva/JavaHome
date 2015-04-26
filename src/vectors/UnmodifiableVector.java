@@ -34,4 +34,12 @@ public class UnmodifiableVector implements Vector {
     public Iterator iterator() {
         return vector.iterator();
     }
+
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        Object clone =  super.clone();
+        UnmodifiableVector result = (UnmodifiableVector) clone;
+        result.vector = (Vector) vector.clone();
+        return result;
+    }
 }

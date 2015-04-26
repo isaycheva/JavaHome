@@ -3,7 +3,7 @@ package vectors;
 import java.io.Serializable;
 import java.util.Iterator;
 
-public interface Vector extends Serializable {
+public interface Vector extends Serializable, Cloneable {
     double getElement(int index);
 
     void setElement(int index, double value);
@@ -13,4 +13,6 @@ public interface Vector extends Serializable {
     double getNorm();
 
     Iterator iterator();
+
+    Object clone() throws CloneNotSupportedException;
 }
