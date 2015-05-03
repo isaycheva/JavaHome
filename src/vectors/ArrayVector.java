@@ -9,18 +9,21 @@ public class ArrayVector implements Vector {
         elements = new double[length];
     }
 
+    @Override
     public double getElement(int index) {
         if (index < 0 || index >= elements.length)
             throw new VectorIndexOutOfBoundsException();
         return elements[index];
     }
 
+    @Override
     public void setElement(int index, double value) {
         if (index < 0 || index >= elements.length)
             throw new VectorIndexOutOfBoundsException();
         elements[index] = value;
     }
 
+    @Override
     public int getSize() {
         return elements.length;
     }
@@ -43,6 +46,7 @@ public class ArrayVector implements Vector {
         return max;
     }
 
+    @Override
     public double getNorm() {
         try {
             return Math.sqrt(Vectors.scalarMult(this, this));
