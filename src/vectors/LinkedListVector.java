@@ -41,7 +41,7 @@ public class LinkedListVector implements Vector {
     @Override
     public double getNorm() {
         try {
-            return Vectors.scalarMult(this, this);
+            return Math.sqrt(Vectors.scalarMult(this, this));
         } catch (IncompatibleVectorSizesException e) {
             e.printStackTrace();
         }
