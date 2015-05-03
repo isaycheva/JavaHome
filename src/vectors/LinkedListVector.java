@@ -2,7 +2,6 @@ package vectors;
 
 import java.io.Serializable;
 import java.util.Iterator;
-import java.util.NoSuchElementException;
 
 public class LinkedListVector implements Vector {
 
@@ -81,7 +80,7 @@ public class LinkedListVector implements Vector {
         hash ^= elements.size();
         for (int i = 0; i < elements.size(); i++) {
             long bits = Double.doubleToLongBits(elements.get(i));
-            hash ^= (int)(bits ^ (bits >>> 32));
+            hash ^= (int) (bits ^ (bits >>> 32));
         }
         return hash;
     }
